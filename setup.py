@@ -7,7 +7,7 @@ setup(
     version='0.0.3',
     description='Various functions and data for Chemical Engineering Students',
     long_description=README,
-    long_description_content_type='text/markdown",
+    long_description_content_type='text/markdown',
     url='https://github.com/ConciseVerbosity18/ChemE_CV',
     author='ol-<(',
     license="MIT",
