@@ -1,7 +1,7 @@
 from setuptools import setup
 import pathlib
 HERE = pathlib.Path(__file__).parent
-REDME = (HERE / "README.md").read_text()
+README = (HERE / "README.md").read_text()
 setup(
     name='ChemE',
     version='0.0.3',
