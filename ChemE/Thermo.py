@@ -348,3 +348,4 @@ if __name__ == '__main__':
     table =search_steam([10, 8600], 'S')
     view_valid_temps(150)
     print(get_steam_value(4570,453))
+    print(Substance('iso_butane').cpA)
