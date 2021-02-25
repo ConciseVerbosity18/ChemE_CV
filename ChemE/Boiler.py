@@ -4,7 +4,9 @@ from scipy.integrate import odeint, quad
 import numpy as np
 from numpy import sin,cos,tan
 from numpy import sinh, cosh,tanh
+from numpy import pi
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 import os
 import pandas as pd
+from scipy.special import erf,erfc,erfinv,erfcinv
