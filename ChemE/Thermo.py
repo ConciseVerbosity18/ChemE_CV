@@ -19,7 +19,14 @@ def assure_path(path):
 def read_in_table(path, index):
     table =  pd.read_csv(assure_path(path), delimiter=' ').astype(float, errors='ignore').set_index(index)
     return table
-
+def lame_doc(f = 'Thermo.py'):
+    path1 = assure_path(f)
+    text = ''
+    with open(path1,'r') as fil1:
+        text = fil1.read()
+    with open('lame_doc.txt','w') as fil:
+        fil.write(text)
+    return
 
 def strf(s):
     try:
@@ -346,6 +353,8 @@ if __name__ == '__main__':
     tab = Table_Super_Steam
     # print(tab.columns)
     table =search_steam([10, 8600], 'S')
+    patHH = '_H'
+    # grouped = tab.groupby(tab.columns.str.extract(patHH, expand=False), axis=1)
     view_valid_temps(150)
     print(get_steam_value(4570,453))
     print(Substance('iso_butane').cpA)
