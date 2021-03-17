@@ -7,6 +7,7 @@ from scipy.optimize import fsolve
 from scipy.integrate import quad
 from numpy import NaN
 from scipy.interpolate import interp1d
+from matplotlib import pyplot as plt
 
 
 kb = 1.38064852e-23
@@ -168,7 +169,58 @@ def get_steam_value(pressure,temperature):
     S = ('S',Table_Super_Steam[str(Ps[0]) + '_S'][str(Ts[0])], Table_Super_Steam[str(Ps[1]) + '_S'][str(Ts[1])])
     table = pd.DataFrame([H,U,V,S], columns=['Type',Ts[0],Ts[1]])
     return table
+def PxyWilson(T,V1,V2,a12,a21,Psat1,Psat2,params1,params2,R = 8.314):
+    ln = np.log
+    y1a = []
+    x1s = np.linspace(0,1)
+    Ps = []
+    Λ12 = lambda T: V2/V1*np.exp(-a12/R/T)
+    Λ21 = lambda T: V1/V2*np.exp(-a21/R/T)
+    grt = lambda T,x1: -(x1*ln(x1 + (1-x1)*Λ12(T)) + (1-x1)*ln((1-x1)+x1*Λ21(T)))
+    gam1 = lambda T,x1: np.exp(-ln(x1 + (1-x1)*Λ12(T))+(1-x1)*(Λ12(T)/(x1+(1-x1)*Λ12(T))-Λ21(T)/(x1*Λ21(T) + (1-x1))))
+    gam2 = lambda T,x1: np.exp(-ln((1-x1)+x1*Λ21(T)) + x1*(Λ21(T)/((1-x1)+x1*Λ21(T))-Λ12(T)/((1-x1)*Λ12(T) + x1)))
+#     psat = lambda T,a,b,c,d,e: np.exp(a+b/T + c*ln(T) + d*T**e)
+    for x1 in x1s:
+        x2 = 1-x1
+        P = Psat1(T,*params1)*x1*gam1(T,x1)+Psat2(T,*params2)*x2*gam2(T,x1)
+        Ps.append(P)
+        y1 = x1*Psat1(T,*params1)*gam1(T,x1)/P
+        y1a.append(y1)
+#     plt.plot(Ps,x1s,'r-',label='x1')
+#     plt.plot(Ps,y1a,'k-',label='y1')
+    plt.plot(x1s,Ps,'r-',label='x1')
+    plt.plot(y1a,Ps,'k-',label='y1')
+    plt.legend()
+    plt.title('PxyWilson')
+    plt.show()
+    return
 
+ex = lambda T,a,b,c,d,e: T
+def TxyWilson(P,V1,V2,a12,a21,Psat1:ex,Psat2:ex,params1,params2,R=8.314):
+    ln =np.log
+    y1a = []
+    x1s = np.linspace(0,1)
+    Ts = []
+    Λ12 = lambda T: V2/V1*np.exp(-a12/R/T)
+    Λ21 = lambda T: V1/V2*np.exp(-a21/R/T)
+    grt = lambda T,x1: -(x1*ln(x1 + (1-x1)*Λ12(T)) + (1-x1)*ln((1-x1)+x1*Λ21(T)))
+    gam1 = lambda T,x1: np.exp(-ln(x1 + (1-x1)*Λ12(T))+(1-x1)*(Λ12(T)/(x1+(1-x1)*Λ12(T))-Λ21(T)/(x1*Λ21(T) + (1-x1))))
+    gam2 = lambda T,x1: np.exp(-ln((1-x1)+x1*Λ21(T)) + x1*(Λ21(T)/((1-x1)+x1*Λ21(T))-Λ12(T)/((1-x1)*Λ12(T) + x1)))
+    psat = lambda T,a,b,c,d,e: np.exp(a+b/T + c*ln(T) + d*T**e)
+    for x1 in x1s:
+        x2 = 1-x1
+        fun = lambda T:  x1*Psat1(T,*params1)*gam1(T,x1)+gam2(T,x1)*x2*Psat2(T,*params2)-P
+        T = fsolve(fun,300)[0]
+        Ts.append(T)
+        y1a.append(x1*Psat1(T,*params1)*gam1(T,x1)/P)
+#     plt.plot(Ts,x1s,'r-',label='x1')
+#     plt.plot(Ts,y1a,'k-',label='y1')
+    plt.plot(x1s,Ts,'r-',label='x1')
+    plt.plot(y1a,Ts,'k-',label='y1')
+    plt.legend()
+    plt.title('TxyWilson')
+    plt.show()
+    return
 class Substance(object):
 
     def __init__(self, name=None, T=NaN, P = NaN, state='g', Tc= NaN, molar_mass=NaN, Pc = NaN, Tr=NaN, Pr=NaN, acentric=NaN, R=8.314e-5, autofill=True):
@@ -348,8 +400,8 @@ def mixture_cp(subs:Substance,T1,T2):
 #todo add Lee_Kesler
 #todo add liquid versions
 if __name__ == '__main__':
-    sub = Substance('ethane',360,20)
-    print(sub.dH)
+    sub = Substance('methanol',400,1)
+    print(sub.Pc)
     tab = Table_Super_Steam
     # print(tab.columns)
     table =search_steam([10, 8600], 'S')
