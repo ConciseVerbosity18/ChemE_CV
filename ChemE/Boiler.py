@@ -61,7 +61,7 @@ def air_mu(T):
     a,b,c,d = 1.425E-06,0.5039,108.3,0
     return a*T**b/(1+c/T+d/T**2) #Pa*s
 rho_ig = lambda P,mw,R,T:P*mw/R/T
-def dip_print():
+def dippr_print():
     stuff = '''water_lcp = lambda T: (276370+-2090.1*T+8.125*T**2+-.014116*T**3+9.3701e-6*T**4)/18.01 #j/kg
 water_lrho = lambda T: (-13.851+.64038*T-.0019124*T**2+1.8211e-6*T**3)*18.01 #kg/m3
 def water_lk(T):
