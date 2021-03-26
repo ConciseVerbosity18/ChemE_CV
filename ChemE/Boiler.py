@@ -60,9 +60,9 @@ def air_k(T):
 def air_mu(T):
     a,b,c,d = 1.425E-06,0.5039,108.3,0
     return a*T**b/(1+c/T+d/T**2) #Pa*s
-rho_ig = lambda P,mw,R,T:P*mw/R/T
+air_rho_ig = lambda P,mw,R,T:P*mw/R/T
 def dippr_print():
-    stuff = '''water_lcp = lambda T: (276370+-2090.1*T+8.125*T**2+-.014116*T**3+9.3701e-6*T**4)/18.01 #j/kg
+    stuff = '''water_lcp = lambda T: (276370+-2090.1*T+8.125*T**2+-.014116*T**3+9.3701e-6*T**4)/18.01 #j/kg/K
 water_lrho = lambda T: (-13.851+.64038*T-.0019124*T**2+1.8211e-6*T**3)*18.01 #kg/m3
 def water_lk(T):
     stuff = [-0.432,0.0057255,-8.078E-06,1.861E-09]
@@ -95,7 +95,7 @@ def air_k(T):
 def air_mu(T):
     a,b,c,d = 1.425E-06,0.5039,108.3,0
     return a*T**b/(1+c/T+d/T**2) #Pa*s
-rho_ig = lambda P,mw,R,T:P*mw/R/T '''
+air_rho_ig = lambda P,mw,R,T:P*mw/R/T '''
     print(stuff)
 if __name__== '__main__':
     print(paste_to_df('204.9, 206.1, 203.9, 207.0, 203.5, 206.3, 203.5, 206.7, 205.8\n1.317, 1.318, 1.301, 1.307, 1.374, 1.323',', '))

@@ -4,7 +4,7 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 setup(
     name='ChemE',
-    version='0.3.0',
+    version='0.4.0',
     description='Various functions and data for Chemical Engineering Students',
     long_description=README,
     long_description_content_type='text/markdown',
