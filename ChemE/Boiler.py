@@ -10,6 +10,7 @@ from scipy.interpolate import interp1d
 import os
 import pandas as pd
 from scipy.special import erf,erfc,erfinv,erfcinv
+from prettytable import PrettyTable as pptt
 
 def paste_to_df(s:str,sep=' ',rows=True,rowsplit='\n'):
     df = pd.DataFrame()
@@ -97,5 +98,10 @@ def air_mu(T):
     return a*T**b/(1+c/T+d/T**2) #Pa*s
 air_rho_ig = lambda P,mw,R,T:P*mw/R/T '''
     print(stuff)
+def dT_lm(Thin,Thout,tcin,tcout):
+    dT1 = Thin-tcout
+    dT2 = Thout-tcin
+    return (dT1-dT2)/ln(dT1/dT2)
+avg = lambda x: sum(x)/len(x)
 if __name__== '__main__':
     print(paste_to_df('204.9, 206.1, 203.9, 207.0, 203.5, 206.3, 203.5, 206.7, 205.8\n1.317, 1.318, 1.301, 1.307, 1.374, 1.323',', '))

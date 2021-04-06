@@ -223,7 +223,7 @@ def TxyWilson(P,V1,V2,a12,a21,Psat1:ex,Psat2:ex,params1,params2,R=8.314):
     return
 class Substance(object):
 
-    def __init__(self, name=None, T=NaN, P = NaN, state='g', Tc= NaN, molar_mass=NaN, Pc = NaN, Tr=NaN, Pr=NaN, acentric=NaN, R=8.314e-5, autofill=True):
+    def __init__(self, name=None, T=NaN, P = NaN, state='g', Tc= NaN, molar_mass=NaN, Pc = NaN, Tr=NaN, Pr=NaN, acentric=NaN, R=8.314e-5, autofill=True,nu = np.NaN):
         self.Tc = Tc
         self.P = P
         self.T = T
@@ -233,6 +233,7 @@ class Substance(object):
         self.acentric = acentric
         self.molar_mass = molar_mass
         self.state = state
+        self.nu = nu
         if autofill:
             try:
                 self.Tc = Table_B1[self.name]['tc/k']
@@ -241,16 +242,19 @@ class Substance(object):
                 self.molar_mass = Table_B1[self.name]['molar_mass']
 
             except KeyError:
-                raise KeyError('Your substance name was not in the table')
-        self.Tr = float(self.T/self.Tc) if Tr is  NaN else Tr
-        self.Pr = float(self.P/self.Pc) if Pr is  NaN else Pr
-        self.Vc = self.R*self.Tc/self.Pc
-        self.alphaSRK = (1 + (.48 + 1.574 * self.acentric - .176 * self.acentric ** 2) * (1 - self.Tr ** .5)) ** 2
-        self.alphaPR = (1 + (.37464 + 1.54226 * self.acentric - .26992 * self.acentric ** 2) * (1 - self.Tr ** .5)) ** 2
-        self.EOSconts = {'vdW': [1, 0, 0, 1 / 8, 27 / 64, 3 / 8],
-                         'RK': [self.Tr ** (-1 / 2), 1, 0, 0.08664, .42748, 1 / 3],
-                         'SRK': [self.alphaSRK, 1, 0, .08664, .42748, 1 / 3],
-                         'PR': [self.alphaPR, 1 + 2 ** .5, 1 - 2 ** .5, .07780, .45724, .30740]}
+                print('Your substance name was not in the table')
+        try:
+            self.Tr = float(self.T/self.Tc) if Tr is  NaN else Tr
+            self.Pr = float(self.P/self.Pc) if Pr is  NaN else Pr
+            self.Vc = self.R*self.Tc/self.Pc
+            self.alphaSRK = (1 + (.48 + 1.574 * self.acentric - .176 * self.acentric ** 2) * (1 - self.Tr ** .5)) ** 2
+            self.alphaPR = (1 + (.37464 + 1.54226 * self.acentric - .26992 * self.acentric ** 2) * (1 - self.Tr ** .5)) ** 2
+            self.EOSconts = {'vdW': [1, 0, 0, 1 / 8, 27 / 64, 3 / 8],
+                             'RK': [self.Tr ** (-1 / 2), 1, 0, 0.08664, .42748, 1 / 3],
+                             'SRK': [self.alphaSRK, 1, 0, .08664, .42748, 1 / 3],
+                             'PR': [self.alphaPR, 1 + 2 ** .5, 1 - 2 ** .5, .07780, .45724, .30740]}
+        except KeyError:
+            print('EOS data or critical values for',self.name)
         try:
             self.cpA = str0(Table_CP_gases[self.name]['a'])
             self.cpB = str0(Table_CP_gases[self.name]['b'])*10**-3
@@ -266,6 +270,8 @@ class Substance(object):
 
         except KeyError:
             print('No dH or Gibss for substance', self.name)
+            self.dG = np.NaN
+            self.dH = np.NaN
     def gas_cp(self, T=None):
         if T is None:
             T = self.T
@@ -410,3 +416,4 @@ if __name__ == '__main__':
     view_valid_temps(150)
     print(get_steam_value(4570,453))
     print(Substance('iso_butane').cpA)
+    print(Substance('Sulfur').dH)
