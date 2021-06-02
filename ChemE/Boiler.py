@@ -11,7 +11,7 @@ import os
 import pandas as pd
 from scipy.special import erf,erfc,erfinv,erfcinv
 from prettytable import PrettyTable as pptt
-
+from pyXSteam.XSteam import XSteam
 def paste_to_df(s:str,sep=' ',rows=True,rowsplit='\n'):
     df = pd.DataFrame()
     if not rows:
@@ -99,6 +99,7 @@ def air_mu(T):
 air_rho_ig = lambda P,mw,R,T:P*mw/R/T '''
     print(stuff)
 def dT_lm(Thin,Thout,tcin,tcout):
+    # '''Hello'''
     dT1 = Thin-tcout
     dT2 = Thout-tcin
     return (dT1-dT2)/ln(dT1/dT2)

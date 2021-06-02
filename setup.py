@@ -11,7 +11,7 @@ setup(
     url='https://github.com/ConciseVerbosity18/ChemE_CV',
     author='ol-<(',
     license="MIT",
-    install_requires=['numpy','scipy','pandas','matplotlib','prettytable'],
+    install_requires=['numpy','scipy','pandas','matplotlib','prettytable','pyXSteam'],
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.7",
