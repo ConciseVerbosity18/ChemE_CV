@@ -189,6 +189,8 @@ class bookmark():
             prog = os.path.basename(path)
             if prog == 'chrome.exe' and 'Jupyter Notebook (Anaconda3).lnk' in progs:
                 continue
+            if 'Winstore'.upper() in path.upper():
+                continue
             os.startfile(path)
             time.sleep(.5)
             if prog == 'chrome.exe' or prog == 'Jupyter Notebook (Anaconda3).lnk':

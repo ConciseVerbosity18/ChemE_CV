@@ -221,12 +221,32 @@ def TxyWilson(P,V1,V2,a12,a21,Psat1:ex,Psat2:ex,params1,params2,R=8.314):
     plt.title('TxyWilson')
     plt.show()
     return
+def Peng_multi(subs,ys,guess):
+    a = 0
+    b = 0
+    alpha = 0
+    aalpha = 0
+    for i in range(len(subs)):
+        bi = .07780*sub.R*subs[i].Tc/sub.Pc
+        b+=ys[i]*bi
+    for i in range(len(subs)):
+        for j in range(len(subs)):
+            ai = .45724*subs[i].R**2*subs[i].Tc**2/subs[i].Pc
+            aj = .45724*subs[i].R**2*subs[i].Tc**2/subs[i].Pc
+            alphai = (1+(.37464+1.54226*subs[i].acentric-.26992*subs[i].acentric**2)*(1-subs[i].Tr**.5))**2
+            alphaj = (1+(.37464+1.54226*subs[j].acentric-.26992*subs[j].acentric**2)*(1-subs[j].Tr**.5))**2
+            aalphai = ai*alphai
+            aalphaj = aj*alphaj
+            aalphaij = (1-0)*np.sqrt(aalphai*aalphaj)
+            aalpha += ys[i]*ys[j]*aalphaij
+    eq = lambda V: subs[0].R*subs[0].T/(V-b)-aalpha/(V**2+2*b*V-b**2)-subs[0].P
+    return fsolve(eq,guess)[0]
 class Substance(object):
 
     def __init__(self, name=None, T=NaN, P = NaN, state='g', Tc= NaN, molar_mass=NaN, Pc = NaN, Tr=NaN, Pr=NaN, acentric=NaN, R=8.314e-5, autofill=True,nu = np.NaN):
         self.Tc = Tc
-        self.P = P
-        self.T = T
+        self.P = P # bar
+        self.T = T # K
         self.Pc = Pc
         self.name = name
         self.R = R
@@ -244,9 +264,9 @@ class Substance(object):
             except KeyError:
                 print('Your substance name was not in the table')
         try:
-            self.Tr = float(self.T/self.Tc) if Tr is  NaN else Tr
-            self.Pr = float(self.P/self.Pc) if Pr is  NaN else Pr
-            self.Vc = self.R*self.Tc/self.Pc
+            self.Tro = float(self.T/self.Tc) if Tr is  NaN else Tr
+            self.Pro = float(self.P/self.Pc) if Pr is  NaN else Pr
+            self.Vco = self.R*self.Tc/self.Pc
             self.alphaSRK = (1 + (.48 + 1.574 * self.acentric - .176 * self.acentric ** 2) * (1 - self.Tr ** .5)) ** 2
             self.alphaPR = (1 + (.37464 + 1.54226 * self.acentric - .26992 * self.acentric ** 2) * (1 - self.Tr ** .5)) ** 2
             self.EOSconts = {'vdW': [1, 0, 0, 1 / 8, 27 / 64, 3 / 8],
@@ -272,6 +292,14 @@ class Substance(object):
             print('No dH or Gibss for substance', self.name)
             self.dG = np.NaN
             self.dH = np.NaN
+
+    @property
+    def Pr(self):
+        return float(self.P/self.Pc) if self.Pc is not NaN else self.Pro
+    @property
+    def Tr(self):
+        return float(self.T / self.Tc) if self.Tc is not NaN else self.Tro
+
     def gas_cp(self, T=None):
         if T is None:
             T = self.T

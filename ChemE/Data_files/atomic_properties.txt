@@ -1,0 +1,47 @@
+element symbol atomic_number atomic weight density structure atomic_radius ionic_radius valence Melting_point
+Aluminum Al 13 26.98 2.71 FCC 0.143 0.053 3 660.4
+Argon Ar 18 39.95 — — — — Inert 189.2
+Barium Ba 56 137.33 3.5 BCC 0.217 0.136 2 725
+Beryllium Be 4 9.012 1.85 HCP 0.114 0.035 2 1278
+Boron B 5 10.81 2.34 Rhomb. — 0.023 3 2300
+Bromine Br 35 79.90 — — — 0.196 1 7.2
+Cadmium Cd 48 112.41 8.65 HCP 0.149 0.095 2 321
+Calcium Ca 20 40.08 1.55 FCC 0.197 0.100 2 839
+Carbon C 6 12.011 2.25 Hex. 0.071 0.016 4 (sublimes at 3367)
+Cesium Cs 55 132.91 1.87 BCC 0.265 0.170 1 28.4
+Chlorine Cl 17 35.45 — — — 0.181 1 101
+Chromium Cr 24 52.00 7.19 BCC 0.125 0.063 3 1875
+Cobalt Co 27 58.93 8.9 HCP 0.125 0.072 2 1495
+Copper Cu 29 63.55 8.94 FCC 0.128 0.096 1 1085
+Fluorine F 9 19.00 — — — 0.133 1 220
+Gallium Ga 31 69.72 5.90 Ortho. 0.122 0.062 3 29.8
+Germanium Ge 32 72.64 5.32 Dia. cubic 0.122 0.053 4 937
+Gold Au 79 196.97 19.32 FCC 0.144 0.137 1 1064
+Helium He 2 4.003 — — — — Inert 272 (at 26 atm)
+Hydrogen H 1 1.008 — — — 0.154 1 259
+Iodine I 53 126.91 4.93 Ortho. 0.136 0.220 1 114
+Iron Fe 26 55.85 7.87 BCC 0.124 0.077 2 1538
+Lead Pb 82 207.2 11.35 FCC 0.175 0.120 2 327
+Lithium Li 3 6.94 0.534 BCC 0.152 0.068 1 181
+Magnesium Mg 12 24.31 1.74 HCP 0.160 0.072 2 649
+Manganese Mn 25 54.94 7.44 Cubic 0.112 0.067 2 1244
+Mercury Hg 80 200.59 — — — 0.110 2 38.8
+Molybdenum Mo 42 95.94 10.22 BCC 0.136 0.070 4 2617
+Neon Ne 10 20.18 — — — — Inert 248.7
+Nickel Ni 28 58.69 8.90 FCC 0.125 0.069 2 1455
+Niobium Nb 41 92.91 8.57 BCC 0.143 0.069 5 2468
+Nitrogen N 7 14.007 — — — 0.01–0.02 5 209.9
+Oxygen O 8 16.00 — — — 0.140 2 218.4
+Phosphorus P 15 30.97 1.82 Ortho. 0.109 0.035 5 44.1
+Platinum Pt 78 195.08 21.45 FCC 0.139 0.080 2 1772
+Potassium K 19 39.10 0.862 BCC 0.231 0.138 1 63
+Silicon Si 14 28.09 2.33 Dia. cubic 0.118 0.040 4 1410
+Silver Ag 47 107.87 10.49 FCC 0.144 0.126 1 962
+Sodium Na 11 22.99 0.971 BCC 0.186 0.102 1 98
+Sulfur S 16 32.06 2.07 Ortho. 0.106 0.184 2 113
+Tin Sn 50 118.71 7.27 Tetra. 0.151 0.071 4 232
+Titanium Ti 22 47.87 4.51 HCP 0.145 0.068 4 1668
+Tungsten W 74 183.84 19.3 BCC 0.137 0.070 4 3410
+Vanadium V 23 50.94 6.1 BCC 0.132 0.059 5 1890
+Zinc Zn 30 65.41 7.13 HCP 0.133 0.074 2 420
+Zirconium Zr 40 91.22 6.51 HCP 0.159 0.079 4 1852
